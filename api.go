@@ -1,8 +1,10 @@
 package main
 
 import (
-	"net/http"
+	// "encoding"
 	"io/ioutil"
+	"net/http"
+
 	"github.com/yanzay/tbot"
 )
 
@@ -13,9 +15,11 @@ func sendAPI(m *tbot.Message) {
 	CheckError(err)
 
 	resp, err := client.Do(req)
-
 	body, err := ioutil.ReadAll(resp.Body)
 	CheckError(err)
+	resp.Body.Close()
 
-	m.Replyf("Weather in, %s, is...", body[:])
+	res := encode(string(body[:]))
+
+	m.Replyf("%+v\n", res)
 }
