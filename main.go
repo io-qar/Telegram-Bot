@@ -33,7 +33,7 @@ func main() {
 	CheckError(err)
 
 	bot.HandleFunc("/start", startHandler)
-	bot.HandleFunc("Show weather in London", sendAPI)
+	bot.HandleFunc("/weather {city}", weatherHandler)
 	//unmatched input
 	bot.HandleDefault(unmatchedHandler)
 
@@ -42,23 +42,27 @@ func main() {
 }
 
 func startHandler(m *tbot.Message) {
-	m.Replyf("Hello, %s!", m.From)
-	buttons := [][]string{
-		{"Show weather in London", "Test", "Buttons"},
-		{"Another", "Row"},
-	}
-	m.ReplyKeyboard("Choose funcs below", buttons)
+	m.Reply("Hello!")
+	// buttons := [][]string{
+	// 	{"Show weather in London", "Test", "Buttons"},
+	// 	{"Another", "Row"},
+	// }
+	// m.ReplyKeyboard("Choose funcs below", buttons)
 }
 
-func KeyboardHandler(m *tbot.Message) {
-	buttons := [][]string{
-		{"Show weather in London", "Test", "Buttons"},
-		{"Another", "Row"},
-	}
-	m.ReplyKeyboard("", buttons)
-	m.Reply("Sending API...")
-	// println(sendAPI())
+func weatherHandler(m *tbot.Message) {
+	sendAPI(m, m.Vars["city"])
 }
+
+// func KeyboardHandler(m *tbot.Message) {
+// 	buttons := [][]string{
+// 		{"Show weather in London", "Test", "Buttons"},
+// 		{"Another", "Row"},
+// 	}
+// 	m.ReplyKeyboard("", buttons)
+// 	m.Reply("Sending API...")
+// 	// println(sendAPI())
+// }
 
 func unmatchedHandler(m *tbot.Message) {
 	m.Reply(`Sorry, you've just entered incorrect command.
