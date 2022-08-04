@@ -9,7 +9,7 @@ import (
 	"github.com/yanzay/tbot"
 )
 
-const token = "5471768780:AAEAbreeE6DDECknHmMrlD2Mfvedb5GIQ-w"
+const token = ""
 var bot *tbot.Server
 
 func CheckError(err error) {
