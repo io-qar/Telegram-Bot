@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
 	"github.com/yanzay/tbot"
-	_ "github.com/yanzay/tbot/v2"
 	"log"
 )
 
@@ -16,16 +14,6 @@ func CheckError(err error) {
 		panic(err)
 	}
 }
-
-// type application struct {
-// 	client *tbot.Client
-// }
-
-// var (
-// 	app application
-// 	bot *tbot.Server
-// 	token string
-// )
 
 func main() {
 	bot, err := tbot.NewServer(token)
@@ -43,42 +31,22 @@ func main() {
 
 func ResultHandler(m *tbot.Message) {
 	res, err := getResultsFromDB(m)
-	if err != nil {
-		fmt.Println(err)
-	}
+	CheckError(err)
 	for _, v := range res {
 		m.Replyf("", v)
 	}
-
 }
 
 func startHandler(m *tbot.Message) {
 	m.Reply("Hello!")
 	sendUserInfoToBD(m)
-	// buttons := [][]string{
-	// 	{"Show weather in London", "Test", "Buttons"},
-	// 	{"Another", "Row"},
-	// }
-	// m.ReplyKeyboard("Choose funcs below", buttons)
 }
 
 func weatherHandler(m *tbot.Message) {
 	sendAPI(m, m.Vars["city"])
 	sendRequestToDB(m)
-
 }
 
-// func KeyboardHandler(m *tbot.Message) {
-// 	buttons := [][]string{
-// 		{"Show weather in London", "Test", "Buttons"},
-// 		{"Another", "Row"},
-// 	}
-// 	m.ReplyKeyboard("", buttons)
-// 	m.Reply("Sending API...")
-// 	// println(sendAPI())
-// }
-
 func unmatchedHandler(m *tbot.Message) {
-	m.Reply(`Sorry, you've just entered incorrect command.
-Please, use buttons below.`)
+	m.Reply("Извините, вы ввели недопустимую команду.\nПожалуйста, используйте клавиатуру бота.")
 }
