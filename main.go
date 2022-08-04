@@ -18,16 +18,6 @@ func CheckError(err error) {
 	}
 }
 
-// type application struct {
-// 	client *tbot.Client
-// }
-
-// var (
-// 	app application
-// 	bot *tbot.Server
-// 	token string
-// )
-
 func main() {
 	bot, err := tbot.NewServer(token)
 	CheckError(err)
