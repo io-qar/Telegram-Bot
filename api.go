@@ -1,7 +1,6 @@
 package main
 
 import (
-	// "encoding"
 	"io/ioutil"
 	"net/http"
 
@@ -19,7 +18,5 @@ func sendAPI(m *tbot.Message, city string) {
 	CheckError(err)
 	resp.Body.Close()
 
-	res := encode(string(body[:]))
-
-	m.Replyf("%+v\n", res)
+	m.Reply(encode(string(body[:])))
 }

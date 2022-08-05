@@ -71,14 +71,7 @@ func getResultsFromDB(m *tbot.Message) ([]requestStruct, error) {
 
 	fmt.Printf("\nSuccessfully connected to database!\n")
 
-	//var r requestStruct
-	//err = db.QueryRow("SELECT id_user, request FROM requests WHERE id_user = ?", id).Scan(&r.id_user, &r.request)
-	//if err != nil {
-	//	fmt.Println(err.Error())
-	//}
-	//fmt.Println(r.request, r.id_user)
-	//m.Replyf("requests:\n", r)
-	rows, err := db.Query(fmt.Sprintf("SELECT id_user, request FROM requests WHERE id_user = %d LIMIT 20", id))
+	rows, err := db.Query(fmt.Sprintf("SELECT id_user, request FROM requests WHERE id_user = %d ORDER BY id_request DESC LIMIT 20", id))
 	if err != nil {
 		panic(err)
 	}
