@@ -33,7 +33,7 @@ func ResultHandler(m *tbot.Message) {
 	res, err := getResultsFromDB(m)
 	CheckError(err)
 	for _, v := range res {
-		m.Replyf("", m.From.UserName, v.idUser, v.request)
+		m.Reply(v.request)
 	}
 }
 
