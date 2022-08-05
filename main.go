@@ -38,7 +38,7 @@ func ResultHandler(m *tbot.Message) {
 }
 
 func startHandler(m *tbot.Message) {
-	m.Reply("Hello!")
+	m.Reply("Hello!\n\nHere are commands:\n/start\n/weather <City_Name>\n/results - returns you the last 20 requests!")
 	sendUserInfoToBD(m)
 }
 
