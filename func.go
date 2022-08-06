@@ -22,7 +22,6 @@ func sendUserInfoToBD(m *tbot.Message) {
 	}
 	insert := fmt.Sprintf("INSERT INTO users (id,username) SELECT %d, '%s' WHERE NOT EXISTS (SELECT id FROM users WHERE id = %d)", id, name, id)
 	fmt.Println(insert)
-
 	_, err = db.Exec(insert)
 	if err != nil {
 		panic(err)
@@ -35,8 +34,8 @@ func sendUserInfoToBD(m *tbot.Message) {
 	fmt.Printf("\nSuccessfully connected to database!\n")
 }
 
-func sendRequestToDB(m *tbot.Message) {
-	req := m.Vars["city"]
+func sendRequestToDB(m *tbot.Message, req string) {
+
 	id := m.From.ID
 	connStr := "user=postgres dbname=tg_bot password=1111 host=localhost sslmode=disable"
 	db, err := sql.Open("postgres", connStr)

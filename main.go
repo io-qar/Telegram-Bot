@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/yanzay/tbot"
 	"log"
+	"strings"
 )
 
 const token = "5442667303:AAGZej_QAla_ii5f8X66-hoCC3weuNBYOog"
@@ -43,8 +44,10 @@ func startHandler(m *tbot.Message) {
 }
 
 func weatherHandler(m *tbot.Message) {
-	sendAPI(m, m.Vars["city"])
-	sendRequestToDB(m)
+	city := m.Vars["city"]
+	city = strings.TrimSpace(city)
+	sendAPI(m, city)
+
 }
 
 func unmatchedHandler(m *tbot.Message) {

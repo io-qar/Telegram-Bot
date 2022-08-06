@@ -6,7 +6,7 @@ require (
 	github.com/lib/pq v1.10.6
 	github.com/tidwall/gjson v1.14.1
 	github.com/yanzay/tbot v1.0.0
-	github.com/yanzay/tbot/v2 v2.2.0
+
 )
 
 require (

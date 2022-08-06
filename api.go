@@ -18,5 +18,5 @@ func sendAPI(m *tbot.Message, city string) {
 	CheckError(err)
 	resp.Body.Close()
 
-	m.Reply(encode(string(body[:])))
+	m.Reply(encode(string(body[:]), m))
 }
