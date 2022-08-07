@@ -86,3 +86,22 @@ func getResultsFromDB(m *tbot.Message) ([]requestStruct, error) {
 
 	return resSlize, nil
 }
+
+func getWords(str string) []string {
+	result := []string{}
+	word := ""
+	for _, v := range str {
+		if v != ' ' {
+			word += string(v)
+		} else {
+			if len(word) != 0 {
+				result = append(result, word)
+				word = ""
+			}
+		}
+	}
+	if len(word) != 0 {
+		result = append(result, word)
+	}
+	return result
+}

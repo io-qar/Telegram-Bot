@@ -46,10 +46,11 @@ func startHandler(m *tbot.Message) {
 func weatherHandler(m *tbot.Message) {
 	city := m.Vars["city"]
 	city = strings.TrimSpace(city)
+	city = sendApiToTranslate(city, "en")
 	sendAPI(m, city)
 
 }
 
 func unmatchedHandler(m *tbot.Message) {
-	m.Reply("Извините, вы ввели недопустимую команду.\nПожалуйста, используйте клавиатуру бота.")
+	m.Reply("Sorry, you entered an invalid command.\nPlease use the bot keyboard.")
 }
