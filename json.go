@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/tidwall/gjson"
-	"github.com/yanzay/tbot"
+	"github.com/yanzay/tbot/v2"
 )
 
 func encode(s string, me *tbot.Message) string {

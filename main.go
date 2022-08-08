@@ -1,14 +1,19 @@
 package main
 
 import (
-	"github.com/yanzay/tbot"
+	"fmt"
 	"log"
 	"strings"
+
+	"github.com/yanzay/tbot/v2"
 )
 
 const token = "5442667303:AAGZej_QAla_ii5f8X66-hoCC3weuNBYOog"
 
-var bot *tbot.Server
+var (
+	bot *tbot.Server
+	client *tbot.Client
+)
 
 func CheckError(err error) {
 	if err != nil {
@@ -17,16 +22,15 @@ func CheckError(err error) {
 }
 
 func main() {
-	bot, err := tbot.NewServer(token)
-	CheckError(err)
+	bot = tbot.New(token)
+	client = bot.Client()
 
-	bot.HandleFunc("/start", startHandler)
-	bot.HandleFunc("/weather {city}", weatherHandler)
-	bot.HandleFunc("/results", ResultHandler)
-	//unmatched input
-	bot.HandleDefault(unmatchedHandler)
+	bot.HandleMessage("/start", startHandler)
+	bot.HandleMessage("/weather .+", weatherHandler)
+	bot.HandleMessage("/results", ResultHandler)
+	bot.HandleMessage("", locHandler)
 
-	err = bot.ListenAndServe()
+	err := bot.Start()
 	log.Fatal(err)
 }
 
@@ -34,23 +38,30 @@ func ResultHandler(m *tbot.Message) {
 	res, err := getResultsFromDB(m)
 	CheckError(err)
 	for _, v := range res {
-		m.Reply(v.request)
+		client.SendMessage(m.Chat.ID, v.request)
 	}
 }
 
 func startHandler(m *tbot.Message) {
-	m.Reply("Hello!\nHere are commands:\n/start\n/weather City_Name\n/results\n results returns you the last 20 requests")
+	client.SendMessage(m.Chat.ID, "Hello!\nHere are commands:\n/start\n/weather City_Name\n/results\n results returns you the last 20 requests")
 	sendUserInfoToBD(m)
 }
 
 func weatherHandler(m *tbot.Message) {
-	city := m.Vars["city"]
+	city := strings.TrimPrefix(m.Text, "/weather ")
 	city = strings.TrimSpace(city)
 	city = sendApiToTranslate(city, "en")
 	sendAPI(m, city)
+}
 
+func locHandler(m *tbot.Message) {
+	if m.Location != nil {
+		sendAPI(m, fmt.Sprint(m.Location.Latitude) + "," + fmt.Sprint(m.Location.Longitude))
+	} else {
+		client.SendMessage(m.Chat.ID, "Похоже, вы не прикрепили местоположение")
+	}
 }
 
 func unmatchedHandler(m *tbot.Message) {
-	m.Reply("Sorry, you entered an invalid command.\nPlease use the bot keyboard.")
+	client.SendMessage(m.Chat.ID, "Sorry, you entered an invalid command.\nPlease use the bot keyboard.")
 }
