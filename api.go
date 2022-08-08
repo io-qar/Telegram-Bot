@@ -7,21 +7,21 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/yanzay/tbot"
+	"github.com/yanzay/tbot/v2"
 )
 
-func sendAPI(m *tbot.Message, city string) {
-	client := &http.Client{}
+func sendAPI(m *tbot.Message, loc string) {
+	clnt := &http.Client{}
 
-	req, err := http.NewRequest(http.MethodGet, "https://api.weatherapi.com/v1/current.json?key=899e2510ac1948588ec165012223107&q="+city+"&aqi=no ", nil)
+	req, err := http.NewRequest(http.MethodGet, "https://api.weatherapi.com/v1/current.json?key=899e2510ac1948588ec165012223107&q="+loc+"&aqi=no&lang=ru", nil)
 	CheckError(err)
 
-	resp, err := client.Do(req)
+	resp, err := clnt.Do(req)
 	body, err := ioutil.ReadAll(resp.Body)
 	CheckError(err)
 	resp.Body.Close()
 
-	m.Reply(encode(string(body[:]), m))
+	client.SendMessage(m.Chat.ID, encode(string(body[:]), m))
 }
 func sendApiToTranslate(str string, lg string) string {
 	//body_test := `[{"detectedLanguage":{"language":"ru","score":1.0},"translations":[{"text":"How to translate you into a string","to":"en"}]}]`
