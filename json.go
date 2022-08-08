@@ -19,12 +19,8 @@ func encode(s string, me *tbot.Message) string {
 		Feels:        m[8].String(),
 		UV:           m[9].String(),
 	}
-	req_word := w.City + " " + w.Country + " " + w.Conditions
-	req_word = sendApiToTranslate(req_word, "ru")
-	ret_words := getWords(req_word)
-	w.City = ret_words[0]
-	w.Country = ret_words[1]
-	w.Conditions = ret_words[2]
+
+	w.Conditions = sendApiToTranslate(w.Conditions, "ru")
 	if w.City == "" {
 
 		return "Введите правильное название города"
