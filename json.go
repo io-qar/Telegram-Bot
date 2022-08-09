@@ -23,13 +23,15 @@ func encode(s string, me *tbot.Message) string {
 	res_str := make([]string, 2)
 	res_str[0] = w.City
 	res_str[1] = w.Country
-	new_str := sendApiToTranslate(res_str[0]+" "+res_str[1], "ru")
-	res_str = getWords(new_str)
-	w.City = res_str[0]
-	w.Country = res_str[1]
+
 	if w.City == "" {
 		return "Введите правильное название города"
 	}
+	new_str := sendApiToTranslate(res_str[0]+" "+res_str[1], "ru")
+	res_str_new := getWords(new_str)
+	w.City = res_str_new[0]
+	w.Country = res_str_new[1]
+
 	result := "Погода в " + w.City + ", " + w.Country + " на " + w.Time + ":\n\nТемпература: " + w.Tempreture_c + "℃\nУсловия: " + w.Conditions + "\nСкорость ветра: " + w.Wind + " км/ч\nДавление: " + w.Pressure + " дюйм р.ст.\nВлажность: " + w.Humidity + "%\nТемпература ощущается как: " + w.Feels + "℃\nИндекс ультрафиолета: " + w.UV + "\n"
 
 	sendRequestToDB(me, result)
