@@ -30,7 +30,8 @@ func encode(s string, me *tbot.Message) string {
 	if w.City == "" {
 		return "Введите правильное название города"
 	}
-	sendRequestToDB(me, w.City)
-	return "Погода в " + w.City + ", " + w.Country + " на " + w.Time + ":\n\nТемпература: " + w.Tempreture_c + "℃\nУсловия: " + w.Conditions + "\nСкорость ветра: " + w.Wind + " км/ч\nДавление: " + w.Pressure + " дюйм р.ст.\nВлажность: " + w.Humidity + "%\nТемпература ощущается как: " + w.Feels + "℃\nИндекс ультрафиолета: " + w.UV + "\n"
+	result := "Погода в " + w.City + ", " + w.Country + " на " + w.Time + ":\n\nТемпература: " + w.Tempreture_c + "℃\nУсловия: " + w.Conditions + "\nСкорость ветра: " + w.Wind + " км/ч\nДавление: " + w.Pressure + " дюйм р.ст.\nВлажность: " + w.Humidity + "%\nТемпература ощущается как: " + w.Feels + "℃\nИндекс ультрафиолета: " + w.UV + "\n"
 
+	sendRequestToDB(me, result)
+	return result
 }
