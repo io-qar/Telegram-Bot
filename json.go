@@ -20,9 +20,14 @@ func encode(s string, me *tbot.Message) string {
 		UV:           m[9].String(),
 	}
 
-	w.Conditions = sendApiToTranslate(w.Conditions, "ru")
+	res_str := make([]string, 2)
+	res_str[0] = w.City
+	res_str[1] = w.Country
+	new_str := sendApiToTranslate(res_str[0]+" "+res_str[1], "ru")
+	res_str = getWords(new_str)
+	w.City = res_str[0]
+	w.Country = res_str[1]
 	if w.City == "" {
-
 		return "Введите правильное название города"
 	}
 	sendRequestToDB(me, w.City)

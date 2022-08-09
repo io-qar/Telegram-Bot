@@ -2,16 +2,15 @@ package main
 
 import (
 	"fmt"
+	"github.com/yanzay/tbot/v2"
 	"log"
 	"strings"
-
-	"github.com/yanzay/tbot/v2"
 )
 
 const token = "5442667303:AAGZej_QAla_ii5f8X66-hoCC3weuNBYOog"
 
 var (
-	bot *tbot.Server
+	bot    *tbot.Server
 	client *tbot.Client
 )
 
@@ -56,7 +55,7 @@ func weatherHandler(m *tbot.Message) {
 
 func locHandler(m *tbot.Message) {
 	if m.Location != nil {
-		sendAPI(m, fmt.Sprint(m.Location.Latitude) + "," + fmt.Sprint(m.Location.Longitude))
+		sendAPI(m, fmt.Sprint(m.Location.Latitude)+","+fmt.Sprint(m.Location.Longitude))
 	} else {
 		client.SendMessage(m.Chat.ID, "Похоже, вы не прикрепили местоположение")
 	}

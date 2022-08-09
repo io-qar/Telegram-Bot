@@ -15,7 +15,7 @@ type requestStruct struct {
 func sendUserInfoToBD(m *tbot.Message) {
 	name := m.From.Username
 	id := m.From.ID
-	connStr := "user=postgres dbname=tg_bot password=admin host=localhost sslmode=disable"
+	connStr := "user=postgres dbname=tg_bot password=1111 host=localhost sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		panic(err)
@@ -37,7 +37,7 @@ func sendUserInfoToBD(m *tbot.Message) {
 func sendRequestToDB(m *tbot.Message, req string) {
 
 	id := m.From.ID
-	connStr := "user=postgres dbname=tg_bot password=admin host=localhost sslmode=disable"
+	connStr := "user=postgres dbname=tg_bot password=1111 host=localhost sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		panic(err)
@@ -59,7 +59,7 @@ func sendRequestToDB(m *tbot.Message, req string) {
 
 func getResultsFromDB(m *tbot.Message) ([]requestStruct, error) {
 	id := m.From.ID
-	connStr := "user=postgres dbname=tg_bot password=admin host=localhost sslmode=disable"
+	connStr := "user=postgres dbname=tg_bot password=1111 host=localhost sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 
 	defer db.Close()
