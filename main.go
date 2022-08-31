@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-const token = "5442667303:AAGZej_QAla_ii5f8X66-hoCC3weuNBYOog"
+const token = ""
 
 var (
 	bot    *tbot.Server
